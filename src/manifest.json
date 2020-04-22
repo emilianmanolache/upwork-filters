@@ -1,0 +1,32 @@
+{
+  "name": "Upwork Filters",
+  "version": "1.0",
+  "description": "Chrome plugin to automatically apply advanced filters to Upwork.com jobs feed, to speed up job search.",
+  "permissions": ["activeTab", "declarativeContent", "storage", "webNavigation", "tabs"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon_16.png",
+      "32": "images/icon_32.png",
+      "48": "images/icon_48.png",
+      "128": "images/icon_128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon_16.png",
+    "32": "images/icon_32.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["*://*.upwork.com/ab/find-work/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

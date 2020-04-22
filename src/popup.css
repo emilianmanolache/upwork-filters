@@ -1,0 +1,21 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    padding: 10px;
+}
+
+select {
+    padding: 4px 6px;
+}
+
+label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.container > div {
+    margin-bottom: 10px;
+}

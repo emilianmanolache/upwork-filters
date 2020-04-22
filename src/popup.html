@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="popup.css" type="text/css" />
+  <script type="text/javascript" src="popup.js "></script>
+  <title>Upwork Filters</title>
+</head>
+<body class="container">
+  <div>
+    <label for="type">Project type: </label>
+    <select name="type" id="type">
+      <option>All</option>
+      <option>Hourly</option>
+      <option>Fixed-price</option>
+    </select>
+  </div>
+  <div>
+    <label for="budget">Minimum budget: </label>
+    <input name="budget" id="budget" type="number" min="0" />
+  </div>
+  <div>
+    <label for="excludedLocations">Excluded countries: </label>
+    <input name="excludedLocations" id="excludedLocations" />
+  </div>
+  <div>
+    <label for="excludedKeywords">Excluded keywords: </label>
+    <input name="excludedKeywords" id="excludedKeywords" />
+  </div>
+</body>
+</html>
