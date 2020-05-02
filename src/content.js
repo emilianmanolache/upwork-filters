@@ -5,9 +5,8 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 
 // apply filters
 chrome.storage.sync.get(['type', 'budget', 'excludedLocations', 'excludedKeywords', 'excludedTags', 'itemsToLoad'], (items) => {
-    var loadingItems = false;
-    setInterval(function() {
-        if (loadingItems) return false;
+    let loadingItems = false;
+    let jobFiltering = setInterval(function() {
         let targetPageSignature = document.querySelector('span[data-advanced-search]');
         if (!targetPageSignature) return;
 
@@ -19,14 +18,20 @@ chrome.storage.sync.get(['type', 'budget', 'excludedLocations', 'excludedKeyword
         let itemsToLoad = parseInt(items.itemsToLoad) || 10;
 
         let jobs = document.getElementsByClassName("job-tile");
+        let filteredJobs = Array.from(jobs).filter(job => job.style.display === "block");
+        if (filteredJobs.length >= itemsToLoad) {
+            clearInterval(jobFiltering);
+            return false;
+        }
+
         jobs = Array.from(jobs).filter(job => job.style.display !== "none");
         let loadMoreButton = document.getElementById("load-more-button");
-        if (jobs.length < itemsToLoad && loadMoreButton) {
+        if (jobs.length < itemsToLoad && loadMoreButton && !loadingItems) {
             loadingItems = true;
             loadMoreButton.click();
             setTimeout(function() {
                 loadingItems = false;
-            }, 500);
+            }, 1000);
         }
         else if (jobs.length) filterJobs(jobs, type, budget, excludedLocations, excludedKeywords, excludedTags, itemsToLoad);
     }, 200);
@@ -75,6 +80,9 @@ function filterJobs(jobs, type, budget, excludedLocations, excludedKeywords, exc
         else if (tags && excludedTags.some(item => tags.indexOf(item.toLowerCase()) !== -1)) {
             console.log("Excluding because skill/tags contain one of these: '" + excludedTags.join(', ') + "' (skills: '" + tags.join(', ') + "')");
             job.style.display = "none";
+        }
+        else {
+            job.style.display = "block";
         }
     }
 }
